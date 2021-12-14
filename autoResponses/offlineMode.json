@@ -1,0 +1,6 @@
+{
+    "name": "offlineModeWarning",
+    "type": "string",
+    "triggers": ["SERVER IS RUNNING IN OFFLINE/INSECURE MODE!"],
+    "responses": ["Hey! This is just a warning to tell you that your server is running in the offline mode to allow cracked players to join. There is nothing to worry about!"]
+}

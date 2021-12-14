@@ -1,6 +1,0 @@
-{
-    "name": "hi",
-    "type": "string",
-    "triggers": ["hi", "hello", "sup", "wassup", "yo", "hey", "howdy", "what's up", "what's up?", "Hi", "Hello", "Sup"],
-    "responses": ["hi", "hello", "sup", "wassup", "yo", "hey", "howdy", "what's up", "what's up?"]
-}

@@ -18,6 +18,7 @@ module.exports = (client) => {
         autoResponses.forEach(file => {
             const autoResponse = require(`../autoResponses/${file}`);
             client.autoResponder.set(autoResponse.name, autoResponse);
+            console.log(`Loaded autoResponder: ${autoResponse.name}`.green);
         });
     }
     catch (e) {
