@@ -8,6 +8,16 @@ module.exports = async (client, message) => {
     if(!message.guild || !message.channel || message.author.bot) return;
     if(message.channel.partial) await message.channel.fetch();
     if(message.partial) await message.fetch();
+    // Check if the message matches any autoResponder triggers
+    const autoResponders = client.autoResponder.filter(ar => ar.triggers.some(t => message.content.toLowerCase().split(" ").includes(t.toLowerCase())));
+    if(autoResponders.size > 0) {
+        // Get a random autoResponder
+        const autoResponder = autoResponders.random();
+        // Get a random response from the autoResponder
+        const response = autoResponder.responses[Math.floor(Math.random()*autoResponder.responses.length)];
+        // Send the response
+        message.channel.send(response);
+    }
     const prefix = config.prefix;
     const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(prefix)})`);
     if(!prefixRegex.test(message.content)) return;
