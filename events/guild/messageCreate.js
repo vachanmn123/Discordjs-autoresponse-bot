@@ -8,7 +8,17 @@ module.exports = async (client, message) => {
     if(!message.guild || !message.channel || message.author.bot) return;
     if(message.channel.partial) await message.channel.fetch();
     if(message.partial) await message.fetch();
-    
+            // Check if the message matches any autoResponder triggers
+    const autoResponders = client.autoResponder.filter(ar => ar.triggers.some(t => message.content.toLowerCase().includes(t.toLowerCase())));
+    if(autoResponders.size > 0 && (settings.AutoResponderChannelWhitelist.includes(message.channel.id) || settings.AutoResponderChannelWhitelist.includes(message.channel.name))) {
+        // Get a random autoResponder
+        const autoResponder = autoResponders.random();
+        // Get a random response from the autoResponder
+        const response = autoResponder.responses[Math.floor(Math.random()*autoResponder.responses.length)];
+        // Send the response
+        message.reply(response);
+        return message.react('✅');
+    }
     const prefix = config.prefix;
     const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(prefix)})`);
     if(!prefixRegex.test(message.content)) return;
@@ -141,17 +151,6 @@ module.exports = async (client, message) => {
               prefix: prefix
             }))]
         }).then(msg => {setTimeout(()=>{msg.delete().catch((e) => {console.log(String(e).grey)})}, 4000)}).catch((e) => {console.log(String(e).grey)});
-        // Check if the message matches any autoResponder triggers
-    const autoResponders = client.autoResponder.filter(ar => ar.triggers.some(t => message.content.toLowerCase().includes(t.toLowerCase())));
-    if(autoResponders.size > 0 && (settings.AutoResponderChannelWhitelist.includes(message.channel.id) || settings.AutoResponderChannelWhitelist.includes(message.channel.name))) {
-        // Get a random autoResponder
-        const autoResponder = autoResponders.random();
-        // Get a random response from the autoResponder
-        const response = autoResponder.responses[Math.floor(Math.random()*autoResponder.responses.length)];
-        // Send the response
-        message.reply(response);
-        return message.react('✅');
-    }
 }
 /**
  * @INFO
