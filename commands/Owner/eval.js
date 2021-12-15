@@ -1,6 +1,8 @@
 const {
   MessageEmbed,
-  splitMessage
+  Util: {
+    splitMessage
+  }
 } = require(`discord.js`);
 var Discord = require(`discord.js`);
 var config = require(`../../botconfig/config.json`);
@@ -56,14 +58,16 @@ module.exports = {
         embeds.push(evalEmbed)
         //send embed
       });
-      message.reply({embeds: embeds});
+      message.reply({ embeds: embeds });
     } catch (e) {
-      return message.reply({embeds: [new MessageEmbed()
+      return message.reply({
+        embeds: [new MessageEmbed()
           .setColor(ee.wrongcolor)
           .setFooter(ee.footertext, ee.footericon)
           .setTitle(`❌ ERROR | An error occurred`)
           .setDescription(`\`\`\`${e.message ? String(e.message).substr(0, 2000) : String(e).substr(0, 2000)}\`\`\``)
-      ]});
+        ]
+      });
     }
   },
 };

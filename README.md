@@ -30,7 +30,7 @@ To add more auto responses, you will need to add a new file to the `autoresponse
 }
 ```
 
-# contributing
+# Contributing
 
 To contribute to the bot, you can either fork the repository or create a new issue.
 
