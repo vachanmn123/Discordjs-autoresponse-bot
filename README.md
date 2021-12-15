@@ -7,7 +7,8 @@ next clone this repository and run `npm install` in the root directory.
 
 # Running the bot
 
-To run the bot, you will need to have a discord bot token. You can get one from the [discordapp.com/developers/applications/me](https://discordapp.com/developers/applications/me) page and create a new application and then under the bot section create a new bot. Copy the token and paste it into the `token` variable in the `config.json` file found at `./botconfig/config.json`.
+To run the bot, you will need to have a discord bot token. You can get one from the [discordapp.com/developers/applications/me](https://discordapp.com/developers/applications/me) page and create a new application and then under the bot section create a new bot. Copy the token and paste it into the `token` variable in the `config.json` file found at `./botconfig/config.json`.  
+To add a channel to the auto responder whitelist you will need to add an entry to the `AutoResponderChannelWhitelist` array in the `settings.json` file.
 
 # Inviting the bot to your server
 
