@@ -10,7 +10,7 @@ module.exports = async (client, message) => {
     if(message.partial) await message.fetch();
     // Check if the message matches any autoResponder triggers
     const autoResponders = client.autoResponder.filter(ar => ar.triggers.some(t => message.content.toLowerCase().includes(t.toLowerCase())));
-    if(autoResponders.size > 0) {
+    if(autoResponders.size > 0 && (settings.AutoResponderChannelWhitelist.includes(message.channel.id) || settings.AutoResponderChannelWhitelist.includes(message.channel.name))) {
         // Get a random autoResponder
         const autoResponder = autoResponders.random();
         // Get a random response from the autoResponder
