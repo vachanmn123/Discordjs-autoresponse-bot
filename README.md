@@ -15,7 +15,11 @@ To add a channel to the auto responder whitelist you will need to add an entry t
 To invite your bot go back to the application page in the discord developers portal and in the oauth2 section under URL generator select the following permissions, and copy the URL and paste it into your URL bar.
 WILL ADD IMAGE HERE!
 
-# Adding more auto responses
+# Setting up the dashboard
+
+To setup the dashboard, set the `dashboardPort` in `./botconfig/settings.json` to the port you want the dashboard to run on.
+
+# Adding more auto responses - MANUAL
 
 To add more auto responses, you will need to add a new file to the `autoresponse` folder. The file name should be a single word describing the response. The file should contain a list of phrases to respond to. Here is an example:
 

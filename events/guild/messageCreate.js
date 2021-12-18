@@ -4,15 +4,31 @@ const ee = require(`../../botconfig/embed.json`);
 const settings = require(`../../botconfig/settings.json`);
 const { onCoolDown, replacemsg } = require("../../handlers/functions");
 const Discord = require("discord.js");
+const fs = require("fs");
+
+
 module.exports = async (client, message) => {
     if(!message.guild || !message.channel || message.author.bot) return;
     if(message.channel.partial) await message.channel.fetch();
     if(message.partial) await message.fetch();
             // Check if the message matches any autoResponder triggers
-    const autoResponders = client.autoResponder.filter(ar => ar.triggers.some(t => message.content.toLowerCase().includes(t.toLowerCase())));
-    if(autoResponders.size > 0 && (settings.AutoResponderChannelWhitelist.includes(message.channel.id) || settings.AutoResponderChannelWhitelist.includes(message.channel.name))) {
+    const autoResponders = []
+    const responderFiles = fs.readdirSync(`${__dirname}/../../autoResponses/`);
+    responderFiles.forEach(file => {
+      if(file.endsWith(".json")) {
+        const responseObj = JSON.parse(fs.readFileSync(`${__dirname}/../../autoResponses/${file}`, "utf8"));
+        if(responseObj.type == "string") {
+          for (trigger in responseObj.triggers) {
+            if(message.content.toLowerCase().includes(responseObj.triggers[trigger].toLowerCase())) {
+              autoResponders.push(responseObj);
+            }
+          }
+        }
+      }
+    });
+    if(autoResponders.length > 0 && (settings.AutoResponderChannelWhitelist.includes(message.channel.id) || settings.AutoResponderChannelWhitelist.includes(message.channel.name))) {
         // Get a random autoResponder
-        const autoResponder = autoResponders.random();
+        const autoResponder = autoResponders[Math.floor(Math.random() * autoResponders.length)];
         // Get a random response from the autoResponder
         const response = autoResponder.responses[Math.floor(Math.random()*autoResponder.responses.length)];
         // Send the response

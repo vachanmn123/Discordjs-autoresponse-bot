@@ -24,6 +24,8 @@ module.exports = client => {
   } catch (e){
     console.log(String(e.stack).grey.italic.dim.bgRed)
   }
+  // Make a child process for ./dash/dashboard.js
+  client.dash = require("child_process").fork("./dash/dashboard.js");
 }
 /**
   * @INFO
