@@ -17,15 +17,31 @@ module.exports = async (client, message) => {
     responderFiles.forEach(file => {
       if(file.endsWith(".json")) {
         const responseObj = JSON.parse(fs.readFileSync(`${__dirname}/../../autoResponses/${file}`, "utf8"));
+        max_match = 0;
         if(responseObj.type == "string") {
           for (trigger in responseObj.triggers) {
-            if(message.content.toLowerCase().includes(responseObj.triggers[trigger].toLowerCase())) {
-              autoResponders.push(responseObj);
+            let matches = 0;
+            message.content.split(" ").forEach(word => { 
+              responseObj.triggers[trigger].split(" ").forEach(triggerWord => {
+                if(word == triggerWord.toLowerCase()) {
+                  matches = matches + 1;
+                }
+              });
+            });
+            let num_trigger_words = responseObj.triggers[trigger].split(' ').length;
+            if (matches/num_trigger_words >= 0.5){
+              if(matches > max_match ){
+                max_match = matches;
+              }
             }
+            }
+          }
+          if (max_match > 0) {
+          autoResponders.push(responseObj);
           }
         }
       }
-    });
+    );
     if(autoResponders.length > 0 && (settings.AutoResponderChannelWhitelist.includes(message.channel.id) || settings.AutoResponderChannelWhitelist.includes(message.channel.name))) {
         // Get a random autoResponder
         const autoResponder = autoResponders[Math.floor(Math.random() * autoResponders.length)];
