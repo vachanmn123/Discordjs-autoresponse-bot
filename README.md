@@ -1,3 +1,5 @@
+# THIS REPOSITORY IS NO LONGER BEING ACTIVELY DEVELOPED AND CONTAINS MANY VULNERABILITIES, PLEASE REVIEW CODE BEFORE USING.
+
 # This is a discord bot which allows you to automatically respond to a message containg a specific word or phrase.
 
 # Installation
